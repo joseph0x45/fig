@@ -5,7 +5,7 @@
     "actions": [
       "Upload residence permit"
     ],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
@@ -14,7 +14,7 @@
     "actions": [
       "Upload copy of entry stamp"
     ],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
@@ -23,7 +23,7 @@
     "actions": [
       "Upload current visa"
     ],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
@@ -32,7 +32,7 @@
     "actions": [
       "Upload copy of foreign residence permit"
     ],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   }
 ]

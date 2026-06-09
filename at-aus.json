@@ -1,11 +1,15 @@
 [
-  {"$import": "shared/uploads.json"},
-  {"$import": "shared/common.json"},
+  {
+    "$import": "shared/uploads.json"
+  },
+  {
+    "$import": "shared/common.json"
+  },
   {
     "id": "apply_or_renew",
     "type": "decision",
     "question": "Would you like to apply for a new permit or renew an existing one?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "New permit",
@@ -13,7 +17,7 @@
       },
       {
         "label": "Renew",
-        "next": "details_of_stay_renew"
+        "next": "intended_duration_of_stay"
       }
     ]
   },
@@ -23,7 +27,7 @@
     "actions": [
       "Select date of first entry in Germany"
     ],
-    "covered": false,
+    "covered": true,
     "next": "intended_duration_of_stay"
   },
   {
@@ -32,14 +36,14 @@
     "actions": [
       "Enter intended duration of stay"
     ],
-    "covered": false,
+    "covered": true,
     "next": "periods_spent_abroad"
   },
   {
     "id": "periods_spent_abroad",
     "type": "decision",
     "question": "Have there been any interruptions ... of more than 6 months",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -57,14 +61,14 @@
     "actions": [
       "Fill data for periods spent abroad"
     ],
-    "covered": false,
+    "covered": true,
     "next": "existing_residence_permit"
   },
   {
     "id": "existing_residence_permit",
     "type": "decision",
     "question": " Do you already have a residence permit from a German Foreigners’ Registration Office? ",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -80,7 +84,7 @@
     "id": "reception_of_diplomatic_visa",
     "type": "decision",
     "question": " Have you received a visa from a German diplomatic mission abroad? ",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -96,7 +100,7 @@
     "id": "schengen_permit",
     "type": "decision",
     "question": " Do you have a residence permit issued to you in another Schengen State (e.g. an EU permit for permanent residency or a residence permit for study purposes)?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -112,7 +116,7 @@
     "id": "certificate_of_temporary_residence",
     "type": "decision",
     "question": "Do you have a ‘certificate of temporary residence permit’ (Bescheinigung über die Aufenthaltsgestattung)?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -128,7 +132,7 @@
     "id": "existing_certificate_of_suspension_of_deportation",
     "type": "decision",
     "question": "Do you have a ‘certificate of suspension of deportation (tolerated stay)’ (Bescheinigung über die Aussetzung der Abschiebung (Duldung))?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -144,7 +148,7 @@
     "id": "country_group",
     "type": "decision",
     "question": "Which country do you belong to?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "europe",
@@ -159,5 +163,40 @@
         "next": "upload_copy_of_entry_stamp"
       }
     ]
+  },
+  {
+    "id": "maintenance_obligations",
+    "type": "decision",
+    "question": "Are you obliged to make maintenance payments to other persons?",
+    "covered": true,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "handle_maintenance_obligations"
+      },
+      {
+        "label": "no",
+        "next": "statutory_violations"
+      }
+    ]
+  },
+  {
+    "id": "handle_maintenance_obligations",
+    "type": "action",
+    "actions": [
+      "Enter amount of maintenance payments",
+      "Upload documents"
+    ],
+    "covered": true,
+    "next": "statutory_violations"
+  },
+  {
+    "id": "statutory_violations",
+    "type": "action",
+    "actions": [
+      "Handle statutory violations"
+    ],
+    "covered": true,
+    "next": "next_page"
   }
 ]
