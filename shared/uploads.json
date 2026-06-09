@@ -1,0 +1,38 @@
+[
+  {
+    "id": "upload_residence_permit",
+    "type": "action",
+    "actions": [
+      "Upload residence permit"
+    ],
+    "covered": false,
+    "next": "maintenance_obligations"
+  },
+  {
+    "id": "upload_copy_of_entry_stamp",
+    "type": "action",
+    "actions": [
+      "Upload copy of entry stamp"
+    ],
+    "covered": false,
+    "next": "maintenance_obligations"
+  },
+  {
+    "id": "upload_current_visa",
+    "type": "action",
+    "actions": [
+      "Upload current visa"
+    ],
+    "covered": false,
+    "next": "maintenance_obligations"
+  },
+  {
+    "id": "upload_copy_of_foreign_residence_permit",
+    "type": "action",
+    "actions": [
+      "Upload copy of foreign residence permit"
+    ],
+    "covered": false,
+    "next": "maintenance_obligations"
+  }
+]

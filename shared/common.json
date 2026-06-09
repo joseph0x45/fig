@@ -1,0 +1,11 @@
+[
+  {
+    "id": "can_not_continue",
+    "type": "action",
+    "actions": [
+      "Can not continue"
+    ],
+    "covered": true,
+    "next": ""
+  }
+]

@@ -1,0 +1,163 @@
+[
+  {"$import": "shared/uploads.json"},
+  {"$import": "shared/common.json"},
+  {
+    "id": "apply_or_renew",
+    "type": "decision",
+    "question": "Would you like to apply for a new permit or renew an existing one?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "New permit",
+        "next": "first_entry_in_germany"
+      },
+      {
+        "label": "Renew",
+        "next": "details_of_stay_renew"
+      }
+    ]
+  },
+  {
+    "id": "first_entry_in_germany",
+    "type": "action",
+    "actions": [
+      "Select date of first entry in Germany"
+    ],
+    "covered": false,
+    "next": "intended_duration_of_stay"
+  },
+  {
+    "id": "intended_duration_of_stay",
+    "type": "action",
+    "actions": [
+      "Enter intended duration of stay"
+    ],
+    "covered": false,
+    "next": "periods_spent_abroad"
+  },
+  {
+    "id": "periods_spent_abroad",
+    "type": "decision",
+    "question": "Have there been any interruptions ... of more than 6 months",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "handle_periods_spent_abroad"
+      },
+      {
+        "label": "no",
+        "next": "existing_residence_permit"
+      }
+    ]
+  },
+  {
+    "id": "handle_periods_spent_abroad",
+    "type": "action",
+    "actions": [
+      "Fill data for periods spent abroad"
+    ],
+    "covered": false,
+    "next": "existing_residence_permit"
+  },
+  {
+    "id": "existing_residence_permit",
+    "type": "decision",
+    "question": " Do you already have a residence permit from a German Foreigners’ Registration Office? ",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "upload_residence_permit"
+      },
+      {
+        "label": "no",
+        "next": "reception_of_diplomatic_visa"
+      }
+    ]
+  },
+  {
+    "id": "reception_of_diplomatic_visa",
+    "type": "decision",
+    "question": " Have you received a visa from a German diplomatic mission abroad? ",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "upload_current_visa"
+      },
+      {
+        "label": "no",
+        "next": "schengen_permit"
+      }
+    ]
+  },
+  {
+    "id": "schengen_permit",
+    "type": "decision",
+    "question": " Do you have a residence permit issued to you in another Schengen State (e.g. an EU permit for permanent residency or a residence permit for study purposes)?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "upload_copy_of_foreign_residence_permit"
+      },
+      {
+        "label": "no",
+        "next": "certificate_of_temporary_residence"
+      }
+    ]
+  },
+  {
+    "id": "certificate_of_temporary_residence",
+    "type": "decision",
+    "question": "Do you have a ‘certificate of temporary residence permit’ (Bescheinigung über die Aufenthaltsgestattung)?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "can_not_continue"
+      },
+      {
+        "label": "no",
+        "next": "existing_certificate_of_suspension_of_deportation"
+      }
+    ]
+  },
+  {
+    "id": "existing_certificate_of_suspension_of_deportation",
+    "type": "decision",
+    "question": "Do you have a ‘certificate of suspension of deportation (tolerated stay)’ (Bescheinigung über die Aussetzung der Abschiebung (Duldung))?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "can_not_continue"
+      },
+      {
+        "label": "no",
+        "next": "country_group"
+      }
+    ]
+  },
+  {
+    "id": "country_group",
+    "type": "decision",
+    "question": "Which country do you belong to?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "europe",
+        "next": "can_not_continue"
+      },
+      {
+        "label": "another",
+        "next": "can_not_continue"
+      },
+      {
+        "label": "offshore_amendment_2",
+        "next": "upload_copy_of_entry_stamp"
+      }
+    ]
+  }
+]
