@@ -1,0 +1,139 @@
+[
+  {
+    "id": "apply_for",
+    "type": "decision",
+    "question": "What would you like to apply for?",
+    "covered": true,
+    "branches": [
+      { "label": "Renew residence permit", "next": "upload_permit_renew" },
+      { "label": "Residence permit for the first time", "next": "reason_for_application" }
+    ]
+  },
+  {
+    "id": "upload_permit_renew",
+    "type": "action",
+    "actions": ["Upload copy of current residence permit"],
+    "covered": true,
+    "next": "interruptions_6mo"
+  },
+  {
+    "id": "interruptions_6mo",
+    "type": "decision",
+    "question": "Have there been any interruptions in the stay in Germany of more than 6 months?",
+    "covered": true,
+    "branches": [
+      { "label": "yes", "next": "period_abroad" },
+      { "label": "no", "next": "maintenance_payments" }
+    ]
+  },
+  {
+    "id": "period_abroad",
+    "type": "action",
+    "actions": [
+      "Upload proof of time spent abroad",
+      "Select dates of absence"
+    ],
+    "covered": false,
+    "next": "maintenance_payments"
+  },
+  {
+    "id": "maintenance_payments",
+    "type": "decision",
+    "question": "Are you obliged to make maintenance payments to other persons?",
+    "covered": false,
+    "branches": [
+      { "label": "yes", "next": "maintenance_payments_component" },
+      { "label": "no", "next": "criminal_record" }
+    ]
+  },
+  {
+    "id": "maintenance_payments_component",
+    "type": "action",
+    "actions": ["Fill in maintenance payments details"],
+    "covered": false,
+    "next": "criminal_record"
+  },
+  {
+    "id": "criminal_record",
+    "type": "decision",
+    "question": "Do you have a criminal record?",
+    "covered": false,
+    "branches": [
+      { "label": "yes", "next": "criminal_record_details" },
+      { "label": "no", "next": "end_renew" }
+    ]
+  },
+  {
+    "id": "criminal_record_details",
+    "type": "action",
+    "actions": ["Provide criminal record details"],
+    "covered": false,
+    "next": "end_renew"
+  },
+  {
+    "id": "end_renew",
+    "type": "action",
+    "actions": ["Submit application"],
+    "covered": false
+  },
+  {
+    "id": "reason_for_application",
+    "type": "decision",
+    "question": "What is the reason for your application?",
+    "covered": true,
+    "branches": [
+      { "label": "Asylum was approved", "next": "step_had_temporary_residence_permit" },
+      { "label": "War in Ukraine", "next": "step_group_of_people" },
+      { "label": "Humanitarian admission program", "next": "step_has_german_diplomatic_mission_visa" },
+      { "label": "Right of residence", "next": "upload_permit_first_time" },
+      { "label": "Temporary period / urgent reason", "next": "upload_permit_urgent" }
+    ]
+  },
+  {
+    "id": "step_had_temporary_residence_permit",
+    "type": "action",
+    "actions": ["Complete temporary residence permit step"],
+    "covered": true
+  },
+  {
+    "id": "step_group_of_people",
+    "type": "action",
+    "actions": ["Complete group of people step"],
+    "covered": true
+  },
+  {
+    "id": "step_has_german_diplomatic_mission_visa",
+    "type": "action",
+    "actions": ["Complete German diplomatic mission visa step"],
+    "covered": true
+  },
+  {
+    "id": "upload_permit_first_time",
+    "type": "action",
+    "actions": ["Upload copy of residence permit"],
+    "covered": false,
+    "next": "step_is_over_27"
+  },
+  {
+    "id": "step_is_over_27",
+    "type": "action",
+    "actions": ["Complete age verification step"],
+    "covered": false
+  },
+  {
+    "id": "upload_permit_urgent",
+    "type": "action",
+    "actions": [
+      "Upload copy of residence permit",
+      "Select date of first entry in Germany"
+    ],
+    "covered": false,
+    "next": "step_desired_length_of_stay"
+  },
+  {
+    "id": "step_desired_length_of_stay",
+    "type": "action",
+    "actions": ["Fill in desired length of stay"],
+    "covered": true
+  }
+]
