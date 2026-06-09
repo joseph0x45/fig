@@ -196,11 +196,28 @@ async function openFile(filename) {
   showGraph();
 }
 
+async function resolveImports(nodes, visited = new Set()) {
+  const result = [];
+  for (const entry of nodes) {
+    if (entry.$import) {
+      if (visited.has(entry.$import)) continue;
+      visited.add(entry.$import);
+      const resp = await fetch('/' + entry.$import + '?_=' + Date.now());
+      const imported = await resp.json();
+      result.push(...await resolveImports(imported, visited));
+    } else {
+      result.push(entry);
+    }
+  }
+  return result;
+}
+
 async function refreshGraph() {
   if (!currentFile) return;
   try {
     const resp = await fetch('/' + currentFile + '?_=' + Date.now());
-    const nodes = await resp.json();
+    const raw = await resp.json();
+    const nodes = await resolveImports(raw, new Set([currentFile]));
     renderGraph(nodes);
   } catch (e) {
     console.error('Failed to load tree', e);
@@ -216,7 +233,7 @@ function getNodeSize(node) {
 }
 
 function buildLayout(nodes) {
-  const g = new dagre.graphlib.Graph();
+  const g = new dagre.graphlib.Graph({ multigraph: true });
   g.setGraph({ rankdir: 'TB', nodesep: 70, ranksep: 90, marginx: 30, marginy: 30 });
   g.setDefaultEdgeLabel(() => ({}));
 
@@ -227,11 +244,11 @@ function buildLayout(nodes) {
 
   nodes.forEach(node => {
     if (node.type === 'decision' && node.branches) {
-      node.branches.forEach(b => {
-        if (b.next) g.setEdge(node.id, b.next, { label: b.label });
+      node.branches.forEach((b, i) => {
+        if (b.next) g.setEdge(node.id, b.next, { label: b.label }, `${node.id}__${b.next}__${i}`);
       });
     } else if (node.next) {
-      g.setEdge(node.id, node.next, { label: '' });
+      g.setEdge(node.id, node.next, { label: '' }, `${node.id}__${node.next}`);
     }
   });
 
