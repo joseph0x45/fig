@@ -308,12 +308,18 @@ function renderGraph(nodes) {
   const root = svg.append('g');
 
   const edgeLayer = root.append('g');
-  layout.edges().forEach(e => {
-    const edgeData = layout.edge(e);
-    const pts = edgeData.points;
+  const lineGen = d3.line().x(d => d.x).y(d => d.y).curve(d3.curveBasis);
 
+  const edgeGroups = new Map();
+  layout.edges().forEach(e => {
+    const key = `${e.v}|||${e.w}`;
+    if (!edgeGroups.has(key)) edgeGroups.set(key, []);
+    edgeGroups.get(key).push(layout.edge(e));
+  });
+
+  edgeGroups.forEach(group => {
+    const pts = group[Math.floor(group.length / 2)].points;
     const pathPts = [pts[0], ...pts, pts[pts.length - 1]];
-    const lineGen = d3.line().x(d => d.x).y(d => d.y).curve(d3.curveBasis);
 
     edgeLayer.append('path')
       .attr('d', lineGen(pathPts))
@@ -322,15 +328,55 @@ function renderGraph(nodes) {
       .attr('stroke-width', 1.5)
       .attr('marker-end', 'url(#arrowhead)');
 
-    if (edgeData.label) {
-      const mid = pts[Math.floor(pts.length / 2)];
+    const labels = group.map(g => g.label).filter(Boolean);
+    if (labels.length === 0) return;
+
+    const mid = pts[Math.floor(pts.length / 2)];
+
+    if (labels.length === 1) {
       edgeLayer.append('text')
         .attr('x', mid.x)
         .attr('y', mid.y - 5)
         .attr('text-anchor', 'middle')
         .attr('fill', '#777')
         .attr('font-size', '10px')
-        .text(truncate(edgeData.label, 24));
+        .text(truncate(labels[0], 24));
+    } else {
+      const pillW = 82, pillH = 18;
+      const pill = edgeLayer.append('g')
+        .attr('transform', `translate(${mid.x},${mid.y})`)
+        .style('cursor', 'default');
+
+      const bg = pill.append('rect')
+        .attr('x', -pillW / 2).attr('y', -pillH / 2)
+        .attr('width', pillW).attr('height', pillH)
+        .attr('rx', 9)
+        .attr('fill', '#252525')
+        .attr('stroke', '#4a4a4a')
+        .attr('stroke-width', 1);
+
+      pill.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('fill', '#888')
+        .attr('font-size', '10px')
+        .text(`${labels.length} branches`);
+
+      pill.on('mouseover', (event) => {
+        bg.attr('fill', '#303030').attr('stroke', '#666');
+        let html = `<div class="tt-title">${labels.length} branches</div>`;
+        labels.forEach(l => { html += `<div class="tt-action">${l}</div>`; });
+        tooltip.innerHTML = html;
+        tooltip.style.display = 'block';
+        tooltip.style.left = (event.clientX + 14) + 'px';
+        tooltip.style.top = (event.clientY - 10) + 'px';
+      }).on('mousemove', (event) => {
+        tooltip.style.left = (event.clientX + 14) + 'px';
+        tooltip.style.top = (event.clientY - 10) + 'px';
+      }).on('mouseout', () => {
+        bg.attr('fill', '#252525').attr('stroke', '#4a4a4a');
+        tooltip.style.display = 'none';
+      });
     }
   });
 
