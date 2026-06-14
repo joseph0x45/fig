@@ -1,0 +1,11 @@
+[
+  {
+    "id": "upload_residence_permit",
+    "type": "action",
+    "actions": [
+      "Upload residence permit"
+    ],
+    "covered": true,
+    "next": "maintenance_obligations"
+  }
+]

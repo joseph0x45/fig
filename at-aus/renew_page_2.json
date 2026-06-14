@@ -1,0 +1,87 @@
+[
+  {
+    "id": "renew_page_2",
+    "type": "decision",
+    "question": "Go to next page",
+    "covered": false,
+    "branches": [
+      {
+        "label": "previous_permit_reason",
+        "next": "previous_permit_reason"
+      }
+    ]
+  },
+  {
+    "id": "previous_permit_reason",
+    "type": "decision",
+    "question": "What was the reason you were issued your previous residence permit?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "vocational_training",
+        "next": "next_page"
+      },
+      {
+        "label": "training_place_search",
+        "next": "next_page"
+      },
+      {
+        "label": "university_studies",
+        "next": "next_page"
+      },
+      {
+        "label": "university_place_search",
+        "next": "next_page"
+      },
+      {
+        "label": "eu_study_internship",
+        "next": "next_page"
+      },
+      {
+        "TODO": "todo",
+        "label": "foreign_qualification_recognition",
+        "next": "foreign_qualification_recognition"
+      },
+      {
+        "label": "language_course",
+        "next": "next_page"
+      },
+      {
+        "label": "school",
+        "next": "next_page"
+      },
+      {
+        "label": "student_exchange",
+        "next": "next_page"
+      }
+    ]
+  },
+  {
+    "id": "foreign_qualification_recognition",
+    "type": "decision",
+    "question": "Type of qualification recognition",
+    "covered": false,
+    "branches": [
+      {
+        "label": "qualification_measure",
+        "next": "next_page"
+      },
+      {
+        "label": "gainful_employment_partnership",
+        "next": "next_page"
+      },
+      {
+        "label": "placement_agreement",
+        "next": "next_page"
+      },
+      {
+        "label": "examination",
+        "next": "next_page"
+      },
+      {
+        "label": "qualification_analysis",
+        "next": "next_page"
+      }
+    ]
+  }
+]
