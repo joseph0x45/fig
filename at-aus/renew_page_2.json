@@ -3,7 +3,7 @@
     "id": "renew_page_2",
     "type": "decision",
     "question": "Go to next page",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "previous_permit_reason",
@@ -15,7 +15,7 @@
     "id": "previous_permit_reason",
     "type": "decision",
     "question": "What was the reason you were issued your previous residence permit?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "vocational_training",
@@ -38,7 +38,6 @@
         "next": "next_page"
       },
       {
-        "TODO": "todo",
         "label": "foreign_qualification_recognition",
         "next": "foreign_qualification_recognition"
       },
@@ -60,7 +59,7 @@
     "id": "foreign_qualification_recognition",
     "type": "decision",
     "question": "Type of qualification recognition",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "qualification_measure",

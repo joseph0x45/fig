@@ -18,7 +18,7 @@
     "id": "maintenance_obligations",
     "type": "decision",
     "question": "Are you obliged to make maintenance payments to other persons?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -37,7 +37,7 @@
       "Enter amount of maintenance payments",
       "Upload documents"
     ],
-    "covered": false,
+    "covered": true,
     "next": "statutory_violations"
   },
   {
@@ -46,14 +46,14 @@
     "actions": [
       "Handle statutory violations"
     ],
-    "covered": false,
+    "covered": true,
     "next": "renew_page_2"
   },
   {
     "id": "apply_or_renew",
     "type": "decision",
     "question": "Would you like to apply for a new permit or renew an existing one?",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "Renew",
@@ -67,14 +67,14 @@
     "actions": [
       "Enter intended duration of stay"
     ],
-    "covered": false,
+    "covered": true,
     "next": "periods_spent_abroad"
   },
   {
     "id": "periods_spent_abroad",
     "type": "decision",
     "question": "Have there been any interruptions ... of more than 6 months",
-    "covered": false,
+    "covered": true,
     "branches": [
       {
         "label": "yes",
@@ -92,14 +92,14 @@
     "actions": [
       "Fill data for periods spent abroad"
     ],
-    "covered": false,
+    "covered": true,
     "next": "existing_residence_permit"
   },
   {
     "id": "existing_residence_permit",
     "type": "decision",
-    "question": " Do you already have a residence permit from a German Foreigners’ Registration Office? ",
-    "covered": false,
+    "question": "Do you already have a residence permit from a German Foreigners’ Registration Office?",
+    "covered": true,
     "branches": [
       {
         "label": "yes",
