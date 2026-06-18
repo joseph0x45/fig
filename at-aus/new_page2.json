@@ -1,0 +1,205 @@
+[
+  {
+    "$import": "shared/common.json"
+  },
+  {
+    "id": "new_page_2",
+    "type": "decision",
+    "question": "Go to next page",
+    "covered": true,
+    "branches": [
+      {
+        "label": "reason_for_stay",
+        "next": "reason_for_stay"
+      }
+    ]
+  },
+  {
+    "id": "has_training_place",
+    "type": "decision",
+    "question": "Do you have a training place",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "applicant_age"
+      }
+    ]
+  },
+  {
+    "id": "applicant_age",
+    "type": "decision",
+    "question": "How old are you",
+    "covered": false,
+    "branches": [
+      {
+        "label": "Younger than 35",
+        "next": "next_page"
+      },
+      {
+        "label": "35 or older",
+        "next": "can_not_continue"
+      }
+    ]
+  },
+  {
+    "id": "place_in_german_university",
+    "type": "decision",
+    "question": "Have you already been offered a place at a university in Germany?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "admission_onto_preparatory_language_course"
+      }
+    ]
+  },
+  {
+    "id": "admission_onto_preparatory_language_course",
+    "type": "decision",
+    "question": "Have you already been admitted onto a preparatory language course, to a preparatory internship or onto a course of studies?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "stay_in_germany_to_apply"
+      }
+    ]
+  },
+  {
+    "id": "stay_in_germany_to_apply",
+    "type": "decision",
+    "question": "Would you like to stay in Germany to apply to a university?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "can_not_continue_page_2"
+      }
+    ]
+  },
+  {
+    "id": "internship_agreement",
+    "type": "decision",
+    "question": "Have you already entered into an internship agreement with an institution in Germany?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "can_not_continue"
+      }
+    ]
+  },
+  {
+    "id": "successfully_completed_studies",
+    "type": "decision",
+    "question": "Have you successfully completed your studies in the last two years?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "internship_agreement"
+      },
+      {
+        "label": "no",
+        "next": "can_not_continue"
+      }
+    ]
+  },
+  {
+    "id": "currently_studying_abroad",
+    "type": "decision",
+    "question": "Are you currently studying abroad?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "internship_agreement"
+      },
+      {
+        "label": "no",
+        "next": "successfully_completed_studies"
+      }
+    ]
+  },
+  {
+    "id": "admitted_to_intensive_german_language_course",
+    "type": "decision",
+    "question": "Have you already been admitted onto an intensive German language course?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "can_not_continue"
+      }
+    ]
+  },
+  {
+    "id": "been_offered_place_at_german_school",
+    "type": "decision",
+    "question": "Have you already been offered a place at a German school?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "yes",
+        "next": "next_page"
+      },
+      {
+        "label": "no",
+        "next": "can_not_continue"
+      }
+    ]
+  },
+  {
+    "id": "reason_for_stay",
+    "type": "decision",
+    "question": "Why do you want to stay in Germany?",
+    "covered": false,
+    "branches": [
+      {
+        "label": "vocational_training",
+        "next": "has_training_place"
+      },
+      {
+        "label": "university_study",
+        "next": "place_in_german_university"
+      },
+      {
+        "label": "study_internship",
+        "next": "currently_studying_abroad"
+      },
+      {
+        "label": "language_course",
+        "next": "admitted_to_intensive_german_language_course"
+      },
+      {
+        "label": "school",
+        "next": "been_offered_place_at_german_school"
+      }
+    ]
+  }
+]

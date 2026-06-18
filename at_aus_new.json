@@ -3,7 +3,7 @@
     "$import": "shared/uploads.json"
   },
   {
-    "$import": "shared/common.json"
+    "$import": "at-aus/new_page2.json"
   },
   {
     "id": "apply_or_renew",
@@ -14,10 +14,6 @@
       {
         "label": "New permit",
         "next": "first_entry_in_germany"
-      },
-      {
-        "label": "Renew",
-        "next": "intended_duration_of_stay"
       }
     ]
   },
@@ -197,6 +193,6 @@
       "Handle statutory violations"
     ],
     "covered": false,
-    "next": "next_page"
+    "next": "new_page_2"
   }
 ]
