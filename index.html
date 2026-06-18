@@ -233,27 +233,63 @@ function getNodeSize(node) {
 }
 
 function buildLayout(nodes) {
+  const inDegree = {};
+  const hasOutgoing = new Set();
+  nodes.forEach(node => {
+    if (node.type === 'decision' && node.branches) {
+      hasOutgoing.add(node.id);
+      node.branches.forEach(b => {
+        if (b.next) inDegree[b.next] = (inDegree[b.next] || 0) + 1;
+      });
+    } else if (node.next) {
+      hasOutgoing.add(node.id);
+      inDegree[node.next] = (inDegree[node.next] || 0) + 1;
+    }
+  });
+
+  const sinkIds = new Set(
+    nodes.filter(n => !hasOutgoing.has(n.id) && (inDegree[n.id] || 0) >= 2).map(n => n.id)
+  );
+
   const g = new dagre.graphlib.Graph({ multigraph: true });
   g.setGraph({ rankdir: 'TB', nodesep: 70, ranksep: 90, marginx: 30, marginy: 30 });
   g.setDefaultEdgeLabel(() => ({}));
 
   nodes.forEach(node => {
+    if (sinkIds.has(node.id)) return;
     const { width, height } = getNodeSize(node);
     g.setNode(node.id, { width, height });
   });
 
+  const phantomMap = new Map();
+
   nodes.forEach(node => {
     if (node.type === 'decision' && node.branches) {
       node.branches.forEach((b, i) => {
-        if (b.next) g.setEdge(node.id, b.next, { label: b.label }, `${node.id}__${b.next}__${i}`);
+        if (!b.next) return;
+        if (sinkIds.has(b.next)) {
+          const pid = `__sink__${node.id}__${i}`;
+          g.setNode(pid, { width: 120, height: 22 });
+          g.setEdge(node.id, pid, { label: b.label }, pid);
+          phantomMap.set(pid, b.next);
+        } else {
+          g.setEdge(node.id, b.next, { label: b.label }, `${node.id}__${b.next}__${i}`);
+        }
       });
     } else if (node.next) {
-      g.setEdge(node.id, node.next, { label: '' }, `${node.id}__${node.next}`);
+      if (sinkIds.has(node.next)) {
+        const pid = `__sink__${node.id}__0`;
+        g.setNode(pid, { width: 120, height: 22 });
+        g.setEdge(node.id, pid, { label: '' }, pid);
+        phantomMap.set(pid, node.next);
+      } else {
+        g.setEdge(node.id, node.next, { label: '' }, `${node.id}__${node.next}`);
+      }
     }
   });
 
   dagre.layout(g);
-  return g;
+  return { g, phantomMap };
 }
 
 function truncate(str, max) {
@@ -280,7 +316,7 @@ function wrapWords(text, maxChars) {
 
 function renderGraph(nodes) {
   const nodeMap = Object.fromEntries(nodes.map(n => [n.id, n]));
-  const layout = buildLayout(nodes);
+  const { g: layout, phantomMap } = buildLayout(nodes);
 
   const total = nodes.length;
   const covered = nodes.filter(n => n.covered).length;
@@ -385,8 +421,31 @@ function renderGraph(nodes) {
 
   layout.nodes().forEach(nodeId => {
     const lNode = layout.node(nodeId);
+    if (!lNode) return;
+
+    if (phantomMap.has(nodeId)) {
+      const targetId = phantomMap.get(nodeId);
+      const target = nodeMap[targetId];
+      const fill = target?.covered ? '#1e3d1e' : '#3d1e1e';
+      const stroke = target?.covered ? '#4caf50' : '#e57373';
+      const g = nodeLayer.append('g').attr('transform', `translate(${lNode.x},${lNode.y})`);
+      g.append('rect')
+        .attr('x', -60).attr('y', -11)
+        .attr('width', 120).attr('height', 22)
+        .attr('rx', 11)
+        .attr('fill', fill)
+        .attr('stroke', stroke)
+        .attr('stroke-width', 1.5)
+        .attr('stroke-dasharray', '5,3');
+      g.append('text')
+        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+        .attr('fill', '#ccc').attr('font-size', '9px')
+        .text('→ ' + truncate(targetId, 18));
+      return;
+    }
+
     const node = nodeMap[nodeId];
-    if (!node || !lNode) return;
+    if (!node) return;
 
     const { x, y, width, height } = lNode;
     const fill = node.covered ? '#2d5a2d' : '#5a2d2d';
