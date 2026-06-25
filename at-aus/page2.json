@@ -1,0 +1,224 @@
+[
+  {
+    "id": "page_2_application_type",
+    "type": "decision",
+    "note": "Page 2 content differs based on application type from page 1.",
+    "question": "What type of application are you making?",
+    "covered": true,
+    "branches": [
+      { "label": "new", "next": "reason_for_stay" },
+      { "label": "renew", "next": "previous_permit_reason" }
+    ]
+  },
+
+  {
+    "id": "reason_for_stay",
+    "type": "decision",
+    "question": "Why do you want to stay in Germany?",
+    "covered": true,
+    "branches": [
+      { "label": "vocational_training", "next": "has_training_place" },
+      { "label": "university_study", "next": "has_university_place" },
+      { "label": "qualification_recognition", "next": "recognition_notification" },
+      { "label": "study_internship", "next": "currently_studying_abroad" },
+      { "label": "language_course", "next": "intensive_german_course_admission" },
+      { "label": "school", "next": "offered_place_at_school" },
+      { "label": "student_exchange", "next": "student_exchange_agreement" }
+    ]
+  },
+
+  {
+    "id": "has_training_place",
+    "type": "decision",
+    "question": "Do you already have a training place?",
+    "covered": true,
+    "branches": [
+      { "label": "yes", "next": "page2_done" },
+      { "label": "no", "next": "applicant_age" }
+    ]
+  },
+  {
+    "id": "applicant_age",
+    "type": "decision",
+    "question": "How old are you?",
+    "covered": true,
+    "branches": [
+      { "label": "under_25", "next": "page2_done" },
+      { "label": "35_or_older", "next": "can_not_continue_age" }
+    ]
+  },
+  {
+    "id": "can_not_continue_age",
+    "type": "action",
+    "note": "Applicant is 35 or older without a training place — service blocked.",
+    "actions": ["Service blocked — applicant does not meet age requirement"],
+    "covered": true
+  },
+
+  {
+    "id": "has_university_place",
+    "type": "decision",
+    "question": "Have you been offered a place in a German university?",
+    "covered": true,
+    "branches": [
+      { "label": "yes", "next": "page2_done" },
+      { "label": "no", "next": "admitted_to_preparatory_course" }
+    ]
+  },
+  {
+    "id": "admitted_to_preparatory_course",
+    "type": "decision",
+    "question": "Have you already been admitted onto a preparatory language course?",
+    "covered": true,
+    "branches": [
+      { "label": "yes", "next": "page2_done" },
+      { "label": "no", "next": "stay_to_apply_to_university" }
+    ]
+  },
+  {
+    "id": "stay_to_apply_to_university",
+    "type": "action",
+    "note": "Answer must be yes or service is blocked.",
+    "actions": ["Confirm you will stay in Germany to apply to a university"],
+    "covered": true,
+    "next": "page2_done"
+  },
+
+  {
+    "id": "recognition_notification",
+    "type": "decision",
+    "question": "Do you already have a notification from a German recognition agency?",
+    "covered": true,
+    "branches": [
+      { "label": "yes", "next": "can_not_continue_recognition" },
+      { "label": "partial", "next": "deficiency_compensation_method" },
+      { "label": "no", "next": "qualification_recognition_method" }
+    ]
+  },
+  {
+    "id": "can_not_continue_recognition",
+    "type": "action",
+    "note": "Full recognition already obtained — service blocked.",
+    "actions": ["Service blocked — full recognition means no residence permit needed for this purpose"],
+    "covered": true
+  },
+  {
+    "id": "deficiency_compensation_method",
+    "type": "decision",
+    "question": "How do you wish to make up for the deficiencies identified by the recognition authority?",
+    "covered": true,
+    "branches": [
+      { "label": "qualification_measures", "next": "german_language_level" },
+      { "label": "foreign_qualification_exam", "next": "german_language_level" }
+    ]
+  },
+  {
+    "id": "qualification_recognition_method",
+    "type": "decision",
+    "question": "How would you like your qualification to be recognised?",
+    "covered": true,
+    "branches": [
+      { "label": "recognition_partnership", "next": "german_language_level" },
+      { "label": "placement_agreement", "next": "german_language_level" },
+      { "label": "qualification_analysis", "next": "german_language_level" }
+    ]
+  },
+  {
+    "id": "german_language_level",
+    "type": "action",
+    "note": "Answer must be yes (A2 or better) or service is blocked.",
+    "actions": ["Confirm German language level is A2 or better"],
+    "covered": true,
+    "next": "page2_done"
+  },
+
+  {
+    "id": "currently_studying_abroad",
+    "type": "decision",
+    "question": "Are you currently studying abroad?",
+    "covered": true,
+    "branches": [
+      { "label": "yes", "next": "internship_agreement" },
+      { "label": "no", "next": "completed_studies_recently" }
+    ]
+  },
+  {
+    "id": "completed_studies_recently",
+    "type": "action",
+    "note": "Answer must be yes or service is blocked.",
+    "actions": ["Confirm studies were successfully completed in the last two years"],
+    "covered": true,
+    "next": "internship_agreement"
+  },
+  {
+    "id": "internship_agreement",
+    "type": "action",
+    "note": "Answer must be yes or service is blocked.",
+    "actions": ["Confirm internship agreement with institution in Germany has been entered into"],
+    "covered": true,
+    "next": "page2_done"
+  },
+
+  {
+    "id": "intensive_german_course_admission",
+    "type": "action",
+    "note": "Answer must be yes or service is blocked.",
+    "actions": ["Confirm admission onto an intensive German language course"],
+    "covered": true,
+    "next": "page2_done"
+  },
+  {
+    "id": "offered_place_at_school",
+    "type": "action",
+    "note": "Answer must be yes or service is blocked.",
+    "actions": ["Confirm a place has been offered at a German school"],
+    "covered": true,
+    "next": "page2_done"
+  },
+  {
+    "id": "student_exchange_agreement",
+    "type": "action",
+    "note": "Answer must be yes or service is blocked.",
+    "actions": ["Confirm agreement on participating in a student exchange has been entered into"],
+    "covered": true,
+    "next": "page2_done"
+  },
+
+  {
+    "id": "previous_permit_reason",
+    "type": "decision",
+    "question": "What was the reason you were issued your previous residence permit?",
+    "covered": true,
+    "branches": [
+      { "label": "vocational_training", "next": "page2_done" },
+      { "label": "training_place_search", "next": "page2_done" },
+      { "label": "university_studies", "next": "page2_done" },
+      { "label": "university_place_search", "next": "page2_done" },
+      { "label": "eu_study_internship", "next": "page2_done" },
+      { "label": "foreign_qualification_recognition", "next": "qualification_recognition_type" },
+      { "label": "language_course", "next": "page2_done" },
+      { "label": "school", "next": "page2_done" },
+      { "label": "student_exchange", "next": "page2_done" }
+    ]
+  },
+  {
+    "id": "qualification_recognition_type",
+    "type": "decision",
+    "question": "What type of qualification recognition measure are you undertaking?",
+    "covered": true,
+    "branches": [
+      { "label": "qualification_measure", "next": "page2_done" },
+      { "label": "gainful_employment_partnership", "next": "page2_done" },
+      { "label": "placement_agreement", "next": "page2_done" },
+      { "label": "examination", "next": "page2_done" },
+      { "label": "qualification_analysis", "next": "page2_done" }
+    ]
+  },
+
+  {
+    "id": "page2_done",
+    "type": "action",
+    "actions": ["Continue to acting person page"],
+    "covered": true
+  }
+]

@@ -3,7 +3,7 @@
     "id": "has_residence_permit",
     "type": "decision",
     "question": "Do you already have a residence permit from a German Foreigners' Registration Office?",
-    "covered": false,
+    "covered": true,
     "branches": [
       { "label": "yes", "next": "upload_residence_permit" },
       { "label": "no", "next": "has_diplomatic_visa" }
@@ -13,14 +13,14 @@
     "id": "upload_residence_permit",
     "type": "action",
     "actions": ["Upload copy of current residence permit"],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
     "id": "has_diplomatic_visa",
     "type": "decision",
     "question": "Have you received a visa from a German diplomatic mission abroad?",
-    "covered": false,
+    "covered": true,
     "branches": [
       { "label": "yes", "next": "upload_diplomatic_visa" },
       { "label": "no", "next": "has_schengen_permit" }
@@ -30,14 +30,14 @@
     "id": "upload_diplomatic_visa",
     "type": "action",
     "actions": ["Upload copy of current visa"],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
     "id": "has_schengen_permit",
     "type": "decision",
     "question": "Do you have a residence permit issued to you in another Schengen State?",
-    "covered": false,
+    "covered": true,
     "branches": [
       { "label": "yes", "next": "upload_schengen_permit" },
       { "label": "no", "next": "has_temp_residence" }
@@ -47,14 +47,14 @@
     "id": "upload_schengen_permit",
     "type": "action",
     "actions": ["Upload copy of foreign residence permit"],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
     "id": "has_temp_residence",
     "type": "decision",
     "question": "Do you have a 'certificate of temporary residence permit'?",
-    "covered": false,
+    "covered": true,
     "branches": [
       { "label": "yes", "next": "can_not_continue_temp_residence" },
       { "label": "no", "next": "has_suspension" }
@@ -65,13 +65,13 @@
     "type": "action",
     "note": "Asylum procedure in progress — service blocked.",
     "actions": ["Service blocked — contact Foreigners' Registration Office for a work permit"],
-    "covered": false
+    "covered": true
   },
   {
     "id": "has_suspension",
     "type": "decision",
     "question": "Do you have a 'certificate of suspension of deportation (tolerated stay)'?",
-    "covered": false,
+    "covered": true,
     "branches": [
       { "label": "yes", "next": "maintenance_obligations" },
       { "label": "no", "next": "country_group" }
@@ -81,7 +81,7 @@
     "id": "country_group",
     "type": "decision",
     "question": "Which country do you belong to?",
-    "covered": false,
+    "covered": true,
     "branches": [
       { "label": "europe", "next": "maintenance_obligations" },
       { "label": "offshore", "next": "upload_entry_stamp" },
@@ -92,7 +92,7 @@
     "id": "upload_entry_stamp",
     "type": "action",
     "actions": ["Upload copy of entry stamp"],
-    "covered": false,
+    "covered": true,
     "next": "maintenance_obligations"
   },
   {
@@ -100,6 +100,6 @@
     "type": "action",
     "note": "Visa from German embassy required first — service blocked.",
     "actions": ["Service blocked — obtain visa from German embassy before applying"],
-    "covered": false
+    "covered": true
   }
 ]
