@@ -1,0 +1,102 @@
+[
+  { "$import": "at-aus/details_of_stay.json" },
+
+  {
+    "id": "application_type",
+    "type": "decision",
+    "question": "What type of application are you making?",
+    "covered": false,
+    "branches": [
+      { "label": "new", "next": "enter_first_entry_date" },
+      { "label": "renew", "next": "enter_intended_duration_renew" }
+    ]
+  },
+
+  {
+    "id": "enter_first_entry_date",
+    "type": "action",
+    "actions": ["Enter date of first entry in Germany"],
+    "covered": false,
+    "next": "enter_intended_duration_new"
+  },
+  {
+    "id": "enter_intended_duration_new",
+    "type": "action",
+    "actions": ["Enter intended duration of stay"],
+    "covered": false,
+    "next": "interruptions_new"
+  },
+  {
+    "id": "interruptions_new",
+    "type": "decision",
+    "question": "Have there been any interruptions in the stay in Germany of more than 6 months?",
+    "covered": false,
+    "branches": [
+      { "label": "yes", "next": "enter_periods_abroad" },
+      { "label": "no", "next": "has_residence_permit" }
+    ]
+  },
+
+  {
+    "id": "enter_intended_duration_renew",
+    "type": "action",
+    "actions": ["Enter intended duration of stay"],
+    "covered": false,
+    "next": "interruptions_renew"
+  },
+  {
+    "id": "interruptions_renew",
+    "type": "decision",
+    "question": "Have there been any interruptions in the stay in Germany of more than 6 months?",
+    "covered": false,
+    "branches": [
+      { "label": "yes", "next": "enter_periods_abroad" },
+      { "label": "no", "next": "has_existing_permit" }
+    ]
+  },
+  {
+    "id": "has_existing_permit",
+    "type": "decision",
+    "question": "Do you already have a residence permit?",
+    "covered": false,
+    "branches": [
+      { "label": "yes", "next": "upload_existing_permit" },
+      { "label": "no", "next": "can_not_continue_renew" }
+    ]
+  },
+  {
+    "id": "upload_existing_permit",
+    "type": "action",
+    "actions": ["Upload copy of existing residence permit"],
+    "covered": false,
+    "next": "maintenance_obligations"
+  },
+  {
+    "id": "can_not_continue_renew",
+    "type": "action",
+    "actions": ["Cannot renew without an existing permit — service blocked"],
+    "covered": false
+  },
+
+  {
+    "id": "enter_periods_abroad",
+    "type": "action",
+    "actions": ["Enter periods spent abroad (date range and reason for each)"],
+    "covered": false,
+    "next": "maintenance_obligations"
+  },
+
+  {
+    "id": "maintenance_obligations",
+    "type": "action",
+    "actions": ["Handle maintenance obligations component"],
+    "covered": false,
+    "next": "statutory_violations"
+  },
+  {
+    "id": "statutory_violations",
+    "type": "action",
+    "actions": ["Handle statutory violations and previous convictions component"],
+    "covered": false
+  }
+]
