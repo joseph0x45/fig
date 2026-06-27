@@ -1,0 +1,42 @@
+[
+  {
+    "id": "residence_document",
+    "type": "decision",
+    "question": "What is your current residence document?",
+    "covered": false,
+    "branches": [
+      { "label": "residence_title", "next": "upload_residence_title" },
+      { "label": "letter_of_recognition", "next": "upload_letter_of_recognition" }
+    ]
+  },
+
+  {
+    "id": "upload_residence_title",
+    "type": "action",
+    "actions": [
+      "Upload copy of residence title",
+      "Upload copy of supplementary sheet",
+      "Describe additional provision to be changed"
+    ],
+    "covered": false,
+    "next": "done"
+  },
+
+  {
+    "id": "upload_letter_of_recognition",
+    "type": "action",
+    "actions": [
+      "Upload copy of letter of recognition from BAMF",
+      "Describe additional provision to be changed"
+    ],
+    "covered": false,
+    "next": "done"
+  },
+
+  {
+    "id": "done",
+    "type": "action",
+    "actions": ["Continue to acting person page"],
+    "covered": false
+  }
+]
